@@ -16,7 +16,7 @@ We are using multiple data augmentation methods which are popular for image clas
 ## Machine Learning models
 We are using Machine Learning models described in the lecture
 ## Performance analysis and Results
-We compare the different models and different methods. Results will available here with the lecturer's approval.
+We compare the different models and different methods. Results will be available here with the lecturer's approval.
 ## Team members
  - Gergely Dániel Németh
  - Hanliang Rao

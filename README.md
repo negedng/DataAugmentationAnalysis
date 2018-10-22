@@ -7,12 +7,20 @@ The chart below summarizes the tasks of the project
 ![Project workflow](/res/tasks_workflow.png)
 ## Datasets
 We are using 3 openly avaible image classification datasets.
+ - MNIST (handwritten digits): http://yann.lecun.com/exdb/mnist/
+ - CIFAR 10 (images): https://www.cs.toronto.edu/~kriz/cifar.html
+ - CalTech 101 (images): http://www.vision.caltech.edu/Image_Datasets/Caltech101/
 ## Creating balanced datasets
 From the chosen datasets we have to create balanced sets. We reduce the data to the same number of classes (`nclasses`) by choosing the classes with the most available examples. Then we create balanced data by elliminating examples of each classes to the number of samples in the smallest class.
 ## Creating unbalanced datasets
 We choose a class to perform data augmentation on it. We reduce the number of samples in the `selected_class` to a given percentage (`reduce_perc`). We select the remaining samples in multiple different ways for data validation.
 ## Data augmentation methods
-We are using multiple data augmentation methods which are popular for image classification
+We are using multiple data augmentation methods which are popular for image classification.
+ - Rotate and crop
+ - Elastic Distortion
+ - Vignette
+ 
+We are using the [Augmentor](https://github.com/mdbloice/Augmentor) package for the first two methods. 
 ## Machine Learning models
 We are using Machine Learning models described in the lecture
 ## Performance analysis and Results

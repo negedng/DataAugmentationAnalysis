@@ -9,7 +9,7 @@ The chart below summarizes the tasks of the project
 We are using 3 openly avaible image classification datasets.
  - MNIST (handwritten digits): http://yann.lecun.com/exdb/mnist/
  - CIFAR 10 (images): https://www.cs.toronto.edu/~kriz/cifar.html
- - CalTech 101 (images): http://www.vision.caltech.edu/Image_Datasets/Caltech101/
+ - Fashion-MNIST (clothes): https://github.com/zalandoresearch/fashion-mnist
 ## Creating balanced datasets
 From the chosen datasets we have to create balanced sets. We reduce the data to the same number of classes (`nclasses`) by choosing the classes with the most available examples. Then we create balanced data by elliminating examples of each classes to the number of samples in the smallest class.
 ## Creating unbalanced datasets

@@ -1,6 +1,8 @@
 import numpy as np
 from sklearn.utils import check_random_state
 
+random_state = check_random_state(0)
+
 def lists_from_dict(data_dictionary, shuffle=True):
     """Generates same length X,y 
     from a dictionary where data_dict[y[key]] is 
@@ -25,13 +27,12 @@ def lists_from_dict(data_dictionary, shuffle=True):
     X = np.array(X)
     y = np.array(y)
     if(shuffle):
-        random_state = check_random_state(0)
         perm = random_state.permutation(len(y))
         return X[perm], y[perm]
     return X, y
 
 def reduce_class_samples(data, label_key=None,
-                        proportion=0.2):
+                        proportion=0.2, shuffle=True):
     """Reduce the samples in a label to the given value of it
     Parameters
     ----------
@@ -42,13 +43,26 @@ def reduce_class_samples(data, label_key=None,
         Default: None (choose the first in the key list)
     proportion: double
         The 0..1 value of the remaining size of the array
-        Default: 0.2"""
+        Default: 0.2
+    shuffle : boolean
+        Shuffle the dictionary before split.
+        Default: True
+    Returns
+    -------
+    data
+        The reduced dictionary
+    label_key
+        The key to the reduced type"""
     if(label_key==None):
         label_key = data.keys()[0]
     label_size = len(data[label_key])
     data_port = (int) (label_size*proportion)
-    data[label_key] = data[label_key][:data_port]
-    return data
+    data_temp = data[label_key]
+    if(shuffle):
+        perm = random_state.permutation(len(data_temp))
+        data_temp = np.array(data_temp)[perm]
+    data[label_key] = data_temp[:data_port]
+    return data, label_key
 
 def generate_balanced_dictionary(X,y,
                                  label_number=None):

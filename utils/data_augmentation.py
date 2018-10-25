@@ -65,3 +65,51 @@ def generate_augmented_data(sample_num, augm_type,
                                grid_width=5,
                                magnitude=2)
     pipe.sample(sample_num)
+
+def load_label_from_file(data, label, path,
+                         image_size=None):
+    """Import images to the dictionary
+    Parameters
+    ----------
+    data : dictionary
+        The dictionary where the data should be added.
+    label : key
+        Key in the dictionary
+    path : str
+        The path for the directory
+    image_size : tupple
+        The size of the image if resized
+        Default:None (original size"""
+    for filename in os.listdir(path):
+        image = imageio.imread(path+filename)
+        if(image_size!=None):
+            image = np.resize(image, image_size)
+        data[label].append(image)
+    return data
+
+def load_augmented_data(data, label, augm_type,
+                       path="augment/output/"):
+    """Load augmented data from subfolders.
+    Automatically adjust size to the first data's size
+    Parameters
+    ----------
+    data : dictionary
+        The data dictionary keyed by labels
+    label : key
+        The key to add images
+    augm_type : str
+        Available types: rotate, shear, distortion, all
+    path : str
+        Path to the root folder of all augmented data."""
+    shape = np.shape(data[label][0])
+    if(augm_type=="rotate" or augm_type=="all"):
+        load_label_from_file(data, label,
+                             path+"rotate/", shape)
+    if(augm_type=="shear" or augm_type=="all"):
+        load_label_from_file(data,label,
+                            path+"shear/", shape)
+    if(augm_type=="distortion" or augm_type=="all"):
+        load_label_from_file(data,label,
+                            path+"distortion/", shape)
+    return data
+

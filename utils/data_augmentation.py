@@ -114,7 +114,7 @@ def load_augmented_data(data, label, augm_type,
                             path+"distortion/", shape)
     if(augm_type=="all" or augm_type==None):
         load_label_from_file(data,label,
-                            path+"al/", shape)
+                            path+"all/", shape)
     return data
 
 def remove_directory(path="augment/"):

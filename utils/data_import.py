@@ -23,8 +23,9 @@ def lists_from_dict(data_dictionary, shuffle=True):
     X = []
     y = []
     for key in data_dictionary.keys():
-        X = np.append(X, data_dictionary[key])
-        y = np.append(y, [key]*len(data_dictionary[key]))
+        for sample in data_dictionary[key]:
+            X.append(sample)
+            y.append(key)
     X = np.array(X)
     y = np.array(y)
     if(shuffle):

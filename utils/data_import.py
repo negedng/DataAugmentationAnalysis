@@ -99,3 +99,20 @@ def generate_balanced_dictionary(X,y,
                 data_dict[y[i]] = [X[i]]
     return data_dict
 
+def train_test_split_dictionary(data, test_rate=0.2):
+    """Split the data into train and test dictionaries
+    Parameters
+    ----------
+    data : dictionary
+        The data dictionary
+    test_rate : float
+        The proportion of the test data"""
+    data_train = {}
+    data_test = {}
+    for key in data.keys():
+        sample_len = len(data[key])
+        split = (int) (sample_len * test_rate)
+        data_train[key]=data[key][split:]
+        data_test[key]=data[key][:split]
+    return data_train, data_test
+

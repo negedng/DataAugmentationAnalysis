@@ -1,3 +1,4 @@
+import copy
 import numpy as np
 from sklearn.utils import check_random_state
 
@@ -22,8 +23,8 @@ def lists_from_dict(data_dictionary, shuffle=True):
     X = []
     y = []
     for key in data_dictionary.keys():
-        X = X + data_dictionary[key]
-        y = y + [key]*len(data_dictionary[key])
+        X = np.append(X, data_dictionary[key])
+        y = np.append(y, [key]*len(data_dictionary[key]))
     X = np.array(X)
     y = np.array(y)
     if(shuffle):
@@ -53,16 +54,17 @@ def reduce_class_samples(data, label_key=None,
         The reduced dictionary
     label_key
         The key to the reduced type"""
+    data_new = copy.deepcopy(data)
     if(label_key==None):
-        label_key = data.keys()[0]
-    label_size = len(data[label_key])
+        label_key = data_new.keys()[0]
+    label_size = len(data_new[label_key])
     data_port = (int) (label_size*proportion)
-    data_temp = data[label_key]
+    data_temp = copy.deepcopy(data_new[label_key])
     if(shuffle):
         perm = random_state.permutation(len(data_temp))
         data_temp = np.array(data_temp)[perm]
-    data[label_key] = data_temp[:data_port]
-    return data, label_key
+    data_new[label_key] = copy.deepcopy(data_temp[:data_port])
+    return data_new, label_key
 
 def generate_balanced_dictionary(X,y,
                                  label_number=None):

@@ -1,4 +1,5 @@
 import os
+import copy
 import shutil
 import imageio
 import Augmentor
@@ -81,12 +82,16 @@ def load_label_from_file(data, label, path,
     image_size : tupple
         The size of the image if resized
         Default:None (original size"""
+    data_new = copy.deepcopy(data)
+    data_label = data[label]
+    data_label = data_label.tolist()
     for filename in os.listdir(path):
         image = imageio.imread(path+filename)
         if(image_size!=None):
             image = np.resize(image, image_size)
-        data[label].append(image)
-    return data
+        data_label.append(image)
+    data_new[label] = copy.deepcopy(np.array(data_label))
+    return data_new
 
 def load_augmented_data(data, label, augm_type,
                        path="augment/output/"):
@@ -102,20 +107,21 @@ def load_augmented_data(data, label, augm_type,
         Available types: rotate, shear, distortion, all, None
     path : str
         Path to the root folder of all augmented data."""
-    shape = np.shape(data[label][0])
+    data_new = copy.deepcopy(data)
+    shape = np.shape(data_new[label][0])
     if(augm_type=="rotate" or augm_type==None):
-        load_label_from_file(data, label,
-                             path+"rotate/", shape)
+        data_new = load_label_from_file(data_new, label,
+                                        path+"rotate/", shape)
     if(augm_type=="shear" or augm_type==None):
-        load_label_from_file(data,label,
-                            path+"shear/", shape)
+        data_new = load_label_from_file(data_new,label,
+                                        path+"shear/", shape)
     if(augm_type=="distortion" or augm_type==None):
-        load_label_from_file(data,label,
-                            path+"distortion/", shape)
+        data_new = load_label_from_file(data_new,label,
+                                        path+"distortion/", shape)
     if(augm_type=="all" or augm_type==None):
-        load_label_from_file(data,label,
-                            path+"all/", shape)
-    return data
+        data_new = load_label_from_file(data_new,label,
+                                        path+"all/", shape)
+    return data_new
 
 def remove_directory(path="augment/"):
     """Removes directory and its content (if exist)"""

@@ -1,4 +1,5 @@
 import os
+import shutil
 import imageio
 import Augmentor
 import numpy as np
@@ -98,18 +99,26 @@ def load_augmented_data(data, label, augm_type,
     label : key
         The key to add images
     augm_type : str
-        Available types: rotate, shear, distortion, all
+        Available types: rotate, shear, distortion, all, None
     path : str
         Path to the root folder of all augmented data."""
     shape = np.shape(data[label][0])
-    if(augm_type=="rotate" or augm_type=="all"):
+    if(augm_type=="rotate" or augm_type==None):
         load_label_from_file(data, label,
                              path+"rotate/", shape)
-    if(augm_type=="shear" or augm_type=="all"):
+    if(augm_type=="shear" or augm_type==None):
         load_label_from_file(data,label,
                             path+"shear/", shape)
-    if(augm_type=="distortion" or augm_type=="all"):
+    if(augm_type=="distortion" or augm_type==None):
         load_label_from_file(data,label,
                             path+"distortion/", shape)
+    if(augm_type=="all" or augm_type==None):
+        load_label_from_file(data,label,
+                            path+"al/", shape)
     return data
+
+def remove_directory(path="augment/"):
+    """Removes directory and its content (if exist)"""
+    if(os.path.exists(path)):
+        shutil.rmtree(path)
 

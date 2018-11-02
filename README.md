@@ -19,10 +19,15 @@ We are using multiple data augmentation methods which are popular for image clas
  - Rotate and crop
  - Elastic Distortion
  - Shear
- 
+ - All the above
+![Data augmentation examples](/res/augmentTypes.png)
+
 We are using the [Augmentor](https://github.com/mdbloice/Augmentor) package for the first two methods. 
 ## Machine Learning models
 We are using Machine Learning models described in the lecture
+ - Logistic Regression
+ - Support Vector Machine
+ - k-Nearest Neighbours
 ## Performance analysis and Results
 We compare the different models and different methods. Results will be available here with the lecturer's approval.
 ## Team members
